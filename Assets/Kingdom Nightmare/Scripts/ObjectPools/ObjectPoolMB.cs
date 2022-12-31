@@ -5,31 +5,45 @@ using UnityEngine;
 
 public abstract class ObjectPoolMB<T> : MonoBehaviour where T:MonoBehaviour
 {
-    [SerializeField] T   _prefab   = null;
-    [SerializeField] int _poolSize = 6;
+    [Serializable]
+    public class ObjectToPool
+    {
+        public T _prefab = null;
+        public int _poolSize = 6;
+    }
+    [SerializeField] List<ObjectToPool> _prefabs = new();
 
     private Queue<T> _objectPool = new();
 
     private void Awake()
     {
-        if(_prefab== null)
+        if(_prefabs == null)
         {
             Debug.LogWarning("No prefab to pooling");
             this.enabled = false;
             return;
         }
 
+        CreateInitialPool();
+    }
+
+    private void CreateInitialPool()
+    {
         //creating initial pool
-        for(int i=0; i< _poolSize; i++)
+        for (int i = 0; i < _prefabs.Count; i++)
         {
-            CreateNewPool();
+            for (int j = 0; j < _prefabs[i]._poolSize; j++)
+            {
+                CreateNewPool(_prefabs[i]._prefab);
+            }
+
         }
     }
 
     public T EnqueFromPool()
     {
-        if (_objectPool.Count == 0) CreateNewPool();
-        T dequeuedObject = _objectPool.Dequeue();
+        if (_objectPool.Count == 0) CreateInitialPool();
+         T dequeuedObject = _objectPool.Dequeue();
         return dequeuedObject;
     }
 
@@ -45,11 +59,11 @@ public abstract class ObjectPoolMB<T> : MonoBehaviour where T:MonoBehaviour
      
     }
 
-    private void CreateNewPool()
+    private void CreateNewPool(T prefab)
     {
-        T newObject = Instantiate(_prefab);
+        T newObject = Instantiate(prefab);
         newObject.transform.SetParent(this.transform);
-        newObject.gameObject.name = _prefab.name;
+        newObject.gameObject.name = prefab.name;
         newObject.gameObject.SetActive(false);
         _objectPool.Enqueue(newObject);
     }

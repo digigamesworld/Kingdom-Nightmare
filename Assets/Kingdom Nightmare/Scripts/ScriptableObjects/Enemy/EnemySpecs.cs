@@ -15,20 +15,23 @@ public class enemyInfo
 [CreateAssetMenu(fileName = "New Enemy Specs", menuName = "ScriptableObjects/New Enemy Specs")]
 public class EnemySpecs : ScriptableObject
 {
-    //inspector properties
-    [SerializeField] private List<enemyInfo> enemyInfos = new();
-    [SerializeField] private GameObject _enemyPrefab;
-    //properties
-    public GameObject EnemyPrefab => _enemyPrefab;
+    //private vars
+    private GameObject _enemyPrefab;
 
+    //inspector properties
+    [SerializeField] private List<enemyInfo> _enemyInfos = new();
+    [SerializeField] private string          _enemyPrefabPath;
+    //properties
+    //public GameObject EnemyPrefab => _enemyPrefab = Resources.Load<GameObject>(_enemyPrefabPath);
+    
     public enemyInfo this[int wave]
     {
         get
         {
-            if (enemyInfos.Count == 0 ) return null;
+            if (_enemyInfos.Count == 0 ) return null;
             //if there is no new info return the last one
-            if (enemyInfos.Count <= wave) return enemyInfos[enemyInfos.Count - 1];
-            else return enemyInfos[wave];
+            if (_enemyInfos.Count <= wave) return _enemyInfos[_enemyInfos.Count - 1];
+            else return _enemyInfos[wave];
 
         }
     }
