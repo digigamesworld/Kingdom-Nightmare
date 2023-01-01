@@ -8,6 +8,7 @@ public class TowerLevel
     public int price;
     public Vector2 range;
     public float fireRate;
+    public int damage;
 }
 [CreateAssetMenu(fileName = "New Tower level list", menuName = "ScriptableObjects/Tower level list")]
 public class UpgradeList : ScriptableObject

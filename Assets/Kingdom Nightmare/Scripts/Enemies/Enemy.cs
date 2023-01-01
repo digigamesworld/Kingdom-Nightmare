@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     private int          _health;
     private int          _currentWave;
     //properties
-    private EnemyHealth  _enemyHealth => GetComponent<EnemyHealth>();
+    public EnemyHealth  _enemyHealth => GetComponent<EnemyHealth>();
     public EnemyHealth EnemyHp => _enemyHealth;
   
     private void Awake()
@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyHealth.InitiateHp(_health);
-        GameSceneManager.Instance.RegisterEnemies(_rb.GetInstanceID(), this);
+        GameSceneManager.Instance.RegisterEnemies(GetComponent<Collider>().GetInstanceID(), this);
     }
+
+  
 }
