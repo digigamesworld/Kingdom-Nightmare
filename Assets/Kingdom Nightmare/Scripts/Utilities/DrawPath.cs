@@ -8,8 +8,24 @@ public class DrawPath : MonoBehaviour {
     //private fields
     private List<Transform> _pathNodes = new List<Transform>();//all the path nodes transform on the path
     private Transform[] nodesArray;
-    //properties
-    public List<Transform> PathNodes => _pathNodes;
+    public List<Transform> PathNodes
+    {
+        get
+        {
+            _pathNodes.Clear();
+            var transformList = FindObjectOfType<DrawPath>().GetComponentsInChildren<Transform>();
+            foreach (Transform tr in transformList)
+            {
+                if (tr != transform)
+                {
+                    _pathNodes.Add(tr);//add transform in the nodesArray to path node except this gameObject  transform
+                }
+
+            }
+            return _pathNodes;
+        }
+    }
+
     private void OnDrawGizmos()
     {
        //every time we creare a new path node array will be updated 

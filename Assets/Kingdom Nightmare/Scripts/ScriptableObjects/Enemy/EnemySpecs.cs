@@ -19,6 +19,7 @@ public class EnemySpecs : ScriptableObject
     private GameObject _enemyPrefab;
 
     //inspector properties
+    [Tooltip("each element is used for diffent wave number, element zero for first wave ...")]
     [SerializeField] private List<enemyInfo> _enemyInfos = new();
     [SerializeField] private string          _enemyPrefabPath;
     //properties

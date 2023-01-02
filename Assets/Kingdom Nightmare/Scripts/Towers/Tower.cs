@@ -25,7 +25,7 @@ public class Tower : MonoBehaviour
     {
         float nearestTargetDistance = Mathf.Infinity;
         Enemy nearestEnemy = null;
-        var registerdEnemies = GameSceneManager.Instance.RegisterdEnemies;
+        var registerdEnemies = GameSceneManager.Instance.AllEnemies();
         for(int i=0; i< GameSceneManager.Instance.RegisterdEnemyCount; i++)
         {
             if(Vector3.Distance(transform.position, registerdEnemies[i].transform.position) < nearestTargetDistance)
@@ -49,7 +49,7 @@ public class Tower : MonoBehaviour
     private void ShootToTarget()
     {
         if (_target == null) return;
-        if (ProjectilePool.Instance._prefabs[_Index_projectilePooledItem] == null) return;
+        if (ProjectilePool.Instance._PooledObjectList[_Index_projectilePooledItem] == null) return;
         _timer += Time.deltaTime;
         if (_timer > _towersSpecs.FireRate)
         {

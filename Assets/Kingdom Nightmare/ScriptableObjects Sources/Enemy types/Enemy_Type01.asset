@@ -12,5 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e45b481f8961614699e5045f6ad3ab4, type: 3}
   m_Name: Enemy_Type01
   m_EditorClassIdentifier: 
-  _enemyInfos: []
+  _enemyInfos:
+  - _HP: 30
+    _Speed: 10
+  - _HP: 35
+    _Speed: 10
+  - _HP: 40
+    _Speed: 12
+  - _HP: 45
+    _Speed: 12
+  - _HP: 50
+    _Speed: 13
+  - _HP: 55
+    _Speed: 13
+  - _HP: 60
+    _Speed: 15
+  - _HP: 70
+    _Speed: 16
+  - _HP: 80
+    _Speed: 16
+  - _HP: 90
+    _Speed: 17
   _enemyPrefabPath: Enemies/Prefabs/SoldierType1

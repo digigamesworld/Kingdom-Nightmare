@@ -14,10 +14,11 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
     private int _currentWave;
     private int _currenLevel = 1;
     private Dictionary<int, Enemy> _enemies = new(); // a reference to all enemies by their ID's
+    public DrawPath  DrawPath => FindObjectOfType<DrawPath>();
     //properties
-    public int CurrentLevel => -CurrentWave;
+    public int CurrentLevel => _currenLevel;
     public int RegisterdEnemyCount => _enemies.Count;
-    public Dictionary<int, Enemy> RegisterdEnemies => _enemies;
+ 
     public int CurrentWave
     {
         get
@@ -28,6 +29,22 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
         {
             _currentWave = value;
         }
+    }
+    public Dictionary<int, Enemy> AllEnemies()
+    {
+        return _enemies;
+    }
+    private void OnEnable()
+    {
+        WaveGenerator.NextWave += SetWaveCount;
+    }
+    private void OnDisable()
+    {
+        WaveGenerator.NextWave -= SetWaveCount;
+    }
+    private void SetWaveCount(int currentWave)
+    {
+        _currentWave = currentWave;
     }
     public void RegisterEnemies(int keyID, Enemy enemy)
     {

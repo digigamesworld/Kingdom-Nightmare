@@ -10,42 +10,47 @@ public abstract class ObjectPoolMB<T> : SingletonMB<ObjectPoolMB<T>> where T:Mon
     {
         public T _prefab = null;
         public int _poolSize = 6;
-        public Queue<T> _objectPool = new();
+        public Queue<T> _objectPoolInQueue = new();
     }
-    public List<ObjectToPool> _prefabs = new();
+    public List<ObjectToPool> _PooledObjectList = new();
 
     
 
     private void Awake()
     {
-        if(_prefabs == null)
+        if(_PooledObjectList == null)
         {
             Debug.LogWarning("No prefab to pooling");
             this.enabled = false;
             return;
         }
-
-        CreateInitialPool();
+        for(int i=0; i< _PooledObjectList.Count; i++)
+        {
+            CreateInitialPool(i);
+        }
+  
     }
 
-    private void CreateInitialPool()
+    private void CreateInitialPool(int index)
     {
+        if (index >= _PooledObjectList.Count) return;
         //creating initial pool
-        for (int i = 0; i < _prefabs.Count; i++)
-        {
-            for (int j = 0; j < _prefabs[i]._poolSize; j++)
+      
+            for (int j = 0; j < _PooledObjectList[index]._poolSize; j++)
             {
-                CreateNewPool(_prefabs[j]._prefab, i);
+                CreateNewPool(_PooledObjectList[index]._prefab, index);
             }
 
-        }
+        
     }
 
     public T GetObjectFromPool(int poolIndex)
     {
-        if (_prefabs[poolIndex]._objectPool.Count == 0) CreateInitialPool();
-        if (_prefabs[poolIndex]._objectPool == null) return null;
-         T dequeuedObject = _prefabs[poolIndex]._objectPool.Dequeue();
+   
+        if (_PooledObjectList[poolIndex]._objectPoolInQueue.Count == 0) CreateInitialPool(poolIndex);
+        if (_PooledObjectList[poolIndex]._objectPoolInQueue == null) return null;
+         T dequeuedObject = _PooledObjectList[poolIndex]._objectPoolInQueue.Dequeue();
+          dequeuedObject.gameObject.SetActive(true);
         return dequeuedObject;
     }
 
@@ -54,7 +59,7 @@ public abstract class ObjectPoolMB<T> : SingletonMB<ObjectPoolMB<T>> where T:Mon
         if (_object == null) return;
         RestoreDefaults(_object);
         _object.gameObject.SetActive(false);
-        _prefabs[poolIndex]._objectPool.Enqueue(_object);
+        _PooledObjectList[poolIndex]._objectPoolInQueue.Enqueue(_object);
     }
 
     protected virtual void RestoreDefaults(T _object)
@@ -68,6 +73,6 @@ public abstract class ObjectPoolMB<T> : SingletonMB<ObjectPoolMB<T>> where T:Mon
         newObject.transform.SetParent(this.transform);
         newObject.gameObject.name = prefab.name;
         newObject.gameObject.SetActive(false);
-        _prefabs[poolIndex]._objectPool.Enqueue(newObject);
+        _PooledObjectList[poolIndex]._objectPoolInQueue.Enqueue(newObject);
     }
 }
