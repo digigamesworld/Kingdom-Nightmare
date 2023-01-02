@@ -23,7 +23,8 @@ public class TowerBase : MonoBehaviour
     {
         if (_tower != null) return;
         _tower = Instantiate(tower, Vector3.zero, Quaternion.identity);
-        _tower.transform.SetParent(transform, false);
+        // _tower.transform.SetParent(transform, false);
+        _tower.transform.position = transform.position;
         _tower.transform.position += _towerOffset;
         
     }

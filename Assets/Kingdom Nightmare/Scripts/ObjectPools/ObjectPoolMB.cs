@@ -12,7 +12,7 @@ public abstract class ObjectPoolMB<T> : SingletonMB<ObjectPoolMB<T>> where T:Mon
         public int _poolSize = 6;
         public Queue<T> _objectPoolInQueue = new();
     }
-    public List<ObjectToPool> _PooledObjectList = new();
+    [SerializeField]List<ObjectToPool> _PooledObjectList = new();
 
     
 

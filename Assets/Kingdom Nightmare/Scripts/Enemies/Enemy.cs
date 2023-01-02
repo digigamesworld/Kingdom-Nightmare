@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private GameSceneManager   _gameManager;
     private int                _pathNodeIndex = 0;
     private Transform          _target;
-    private int                _poolIndexNUmebr;
+    private int                _poolIndexNumebr;
     //properties
     public EnemyHealth  _enemyHealth => GetComponent<EnemyHealth>();
     public EnemyHealth EnemyHp => _enemyHealth;
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     private List<Transform> _pathNodes = new List<Transform>();
 
     public static event Action EnemyReachedEndNode;
-
+    public int PooledIndex => _poolIndexNumebr;
     //properties
 
     private void Awake()
@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
 
         _pathNodeIndex = 0;
         _target = _pathNodes[_pathNodeIndex];
-        _poolIndexNUmebr = PoolIndex;
+        _poolIndexNumebr = PoolIndex;
     }
 
 
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         if (_pathNodeIndex >= _pathNodes.Count)
         {
          
-            EnemyPool.Instance.BackObjectToPool(this, _poolIndexNUmebr);
+            EnemyPool.Instance.BackObjectToPool(this, _poolIndexNumebr);
             EnemyReachedEndNode?.Invoke();
             return;
 
@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
         _target = _pathNodes[_pathNodeIndex];
 
         var dir = _target.position - transform.position;
-        transform.position += dir.normalized * _enemySpecs[GameSceneManager.Instance.CurrentWave]._Speed * Time.deltaTime*6;
+        transform.position += dir.normalized * _enemySpecs[GameSceneManager.Instance.CurrentWave]._Speed * Time.deltaTime;
       
         Quaternion targetrotation = Quaternion.LookRotation(dir.normalized);
 

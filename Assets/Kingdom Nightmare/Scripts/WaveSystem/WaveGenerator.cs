@@ -6,7 +6,7 @@ using System;
 public class WaveGenerator : MonoBehaviour
 {
 
-    public static event Action<int> NextWave;
+    public static event Action NextWave;
     //private variable
     private float _timer;
     private int   _currentWave;
@@ -37,14 +37,22 @@ public class WaveGenerator : MonoBehaviour
             return true;
         }
     }
-
+    private void OnEnable()
+    {
+        WaveGenerator.NextWave += InvokeWave;
+    }
+    private void OnDisable()
+    {
+        WaveGenerator.NextWave -= InvokeWave;
+    }
     private void Start()
     {
         InvokeWave();
     }
     private void InvokeWave()
     {
-        if(GameSceneManager.Instance.CurrentWave == _startAtWave)
+      //work to do
+        if(GameSceneManager.Instance.WavesCount == _startAtWave)
                Invoke(nameof(StartSendingWave), _delayTime);
     }
     private void StartSendingWave()
@@ -73,8 +81,7 @@ public class WaveGenerator : MonoBehaviour
                 }
                 if(_currentWave < _waveCount)
                 {
-                    NextWave?.Invoke(_currentWave);
-                    InvokeWave();
+                    NextWave?.Invoke();
                     Invoke(nameof(StartSendingWave), _delayTime);
                 }
             }

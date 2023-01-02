@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1574788524572030267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169520716313323554}
+  m_Layer: 7
+  m_Name: StartFirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &169520716313323554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574788524572030267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239525205918458698}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2132990153527137663
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6105099091158629278}
   - component: {fileID: 2730116327889331323}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CanonTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,8 +77,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towersSpecs: {fileID: 11400000, guid: 1fd3a53c066c4a348bcc420dc4cfb004, type: 2}
-  _Index_projectilePooledItem: 0
+  _Index_projectilePooledItem: 1
   _retargetingTime: 0.5
+  _startFireTransform: {fileID: 169520716313323554}
 --- !u!1001 &1235110083575390494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55,9 +87,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6105099091158629278}
     m_Modifications:
+    - target: {fileID: 1656643413961072, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1787649280074020, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}
       propertyPath: m_Name
       value: TB_CanonTower_Lvl2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787649280074020, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4595444196442708, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}
       propertyPath: m_RootOrder
@@ -141,18 +181,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1656643413961072, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}
   m_PrefabInstance: {fileID: 1235110083575390494}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2651057956831315651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235706650878724206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9edfd293370f0b9449198928fb42feed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &4262399052640700561
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -167,6 +195,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 257f854f145db2b4ebe40ddfa20f5024, type: 3}
+--- !u!114 &2651057956831315651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235706650878724206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9edfd293370f0b9449198928fb42feed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1239525205918458698 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4595444196442708, guid: 48a54091141567342bfd0621b9fd5e22, type: 3}

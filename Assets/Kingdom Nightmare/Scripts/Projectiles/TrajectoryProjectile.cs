@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class TrajectoryProjectile : Projectile
 {
-   
-  
-    public override void Shoot(Vector2 projectileRange, int damage, Vector3 targetPos)
+
+
+
+    public override void Shoot(Vector2 projectileRange, int damage,Transform startTrans ,Vector3 targetPos)
     {
+       
         _projectileRange = projectileRange;
         _damage = damage;
-        _targetPos = targetPos;
-        var distance = Vector3.Distance(_targetPos, transform.position);
+        _startTrans = startTrans;
+        var distance = Vector3.Distance(targetPos, startTrans.position);
         //set the initial velocity based on distance to target
-        float initVelocity = Mathf.Lerp(_velicity*0.3f, _velicity, distance / 20f);
-        var velocity = ThrowBallAtTargetLocation(_targetPos, initVelocity, distance);
+        float initVelocity = Mathf.Lerp(_velocity*0.3f, _velocity, distance / 20f);
+        var velocity = ThrowBallAtTargetLocation(targetPos, initVelocity, distance);
+        if(velocity.magnitude > 0)
         _rb.AddForce(velocity, ForceMode.Impulse);
     }
-
 
 }

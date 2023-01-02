@@ -4,7 +4,7 @@ using System;
 [RequireComponent(typeof(Enemy))]
 public class EnemyHealth : MonoBehaviour
 {
-    public static event Action<Enemy> EnemyDied;
+    //public static event Action<Enemy> EnemyDied;
     //privates
     private int _hp = 100;
     private Enemy _enemy;
@@ -21,7 +21,8 @@ public class EnemyHealth : MonoBehaviour
         _hp -= damageAmount;
         if(_hp <= 0)
         {
-            EnemyDied?.Invoke(_enemy);
+            //EnemyDied?.Invoke(_enemy);
+            EnemyPool.Instance.BackObjectToPool(_enemy, _enemy.PooledIndex);
         }
     }
 }

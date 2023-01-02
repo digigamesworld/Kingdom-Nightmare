@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6731923405708209799}
   - component: {fileID: 4145468002216809052}
   - component: {fileID: 933196749905682962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SoldierType2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySpecs: {fileID: 11400000, guid: d31c33f9e7ae5ea4e9a48f7c4f64a85d, type: 2}
-  _collider: {fileID: 46607633307321414}
+  _collider: {fileID: 2440914656253813918}
   _nextNodeRange: 1.2
 --- !u!114 &933196749905682962
 MonoBehaviour:
@@ -68,9 +68,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6731923405708209799}
     m_Modifications:
+    - target: {fileID: 1155426756677996, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1350674450777910, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
       propertyPath: m_Name
       value: TB_Soldier_Mage_Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350674450777910, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350674450777910, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4544626439013454, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
       propertyPath: m_RootOrder
@@ -128,8 +140,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1350674450777910, guid: 1df10b60c8b0fa64fb806e64fe509b56, type: 3}
   m_PrefabInstance: {fileID: 1256509387657617513}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &46607633307321414
-MeshCollider:
+--- !u!54 &3585726837629950566
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257850987773568863}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &2440914656253813918
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -138,7 +166,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 1fb76cf6f6a5a3b4689b4e7e97ff9ea1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.6233487, y: 4.2802835, z: 2.3786397}
+  m_Center: {x: 0.06641263, y: 2.1401417, z: 0.14571542}

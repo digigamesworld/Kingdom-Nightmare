@@ -5,38 +5,45 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     //private variables
-    private Transform      _target;
-    private int            _currentLevel = 1;
+  
+    private int            _currentLevel = 0;
     private float          _timer = 0.0f;
 
     //inspectore variables
     [SerializeField] TowersSpecs    _towersSpecs;
     [SerializeField] int            _Index_projectilePooledItem;
     [SerializeField] float          _retargetingTime = 0.5f;
-
+    [SerializeField] Transform      _startFireTransform;
     //properties
     public TowersSpecs TowerSpecs => _towersSpecs;
     private void Start()
     {
-       // InvokeRepeating(nameof(UpdateTarget), 0.0f, _retargetingTime);
+        InvokeRepeating(nameof(UpdateTarget), 0.0f, _retargetingTime);
     }
 
     private Enemy  UpdateTarget()
     {
+       
         float nearestTargetDistance = Mathf.Infinity;
         Enemy nearestEnemy = null;
         var registerdEnemies = GameSceneManager.Instance.AllEnemies();
-        for(int i=0; i< GameSceneManager.Instance.RegisterdEnemyCount; i++)
+        foreach(Enemy Ene in registerdEnemies.Values)
         {
-            if(Vector3.Distance(transform.position, registerdEnemies[i].transform.position) < nearestTargetDistance)
+            if (!Ene.gameObject.activeInHierarchy) continue;
+            if(Vector3.Distance(transform.position, Ene.transform.position) < nearestTargetDistance)
             {
-                nearestTargetDistance = Vector3.Distance(transform.position, registerdEnemies[i].transform.position);
-                nearestEnemy = registerdEnemies[i];
+                nearestTargetDistance = Vector3.Distance(transform.position, Ene.transform.position);
+                nearestEnemy = Ene;
+
             }
         }
-        if (nearestEnemy != null && _towersSpecs.Range.x > nearestTargetDistance
-                                    && _towersSpecs.Range.y < nearestTargetDistance)
+
+        if (nearestEnemy != null && nearestTargetDistance > _towersSpecs.Range.x
+                                    && _towersSpecs.Range.y > nearestTargetDistance)
+        {
+   
             return nearestEnemy;
+        }
         else
             return null;
     }
@@ -48,13 +55,15 @@ public class Tower : MonoBehaviour
     }
     private void ShootToTarget()
     {
-        if (_target == null) return;
-        if (ProjectilePool.Instance._PooledObjectList[_Index_projectilePooledItem] == null) return;
+        if (UpdateTarget() == null) return;
+  
         _timer += Time.deltaTime;
         if (_timer > _towersSpecs.FireRate)
         {
             var projectile = ProjectilePool.Instance.GetObjectFromPool(_Index_projectilePooledItem);
-            if (projectile != null) projectile.Shoot(_towersSpecs.Range, _towersSpecs.Damage, _target.transform.position);
+            projectile.transform.position = _startFireTransform.position;
+            if (projectile != null) projectile.Shoot(_towersSpecs.Range, _towersSpecs.Damage, _startFireTransform,UpdateTarget().transform.position);
+            _timer = 0;
         }
     }
     private void OnDrawGizmosSelected()

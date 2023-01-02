@@ -5,45 +5,55 @@ using System;
 public abstract class Projectile : MonoBehaviour
 {
 
-    public event Action ProjectileDestroyed;
 
     //inspector variables
-    [SerializeField] protected float            _velicity        = 15.0f;
+    [SerializeField] protected float            _velocity        = 15.0f;
     [SerializeField] protected Rigidbody        _rb              = null;
-    [SerializeField] protected ProjectilePool   _pool            = null;
     [SerializeField] protected int              _poolIndex       = 0;
-  
+
 
     //privates
-    protected Vector3    _startPos;
-    protected Vector2    _projectileRange;
-    protected int        _damage = 20;// damage power is taken from its tower
-    protected Vector3    _targetPos;
-    protected virtual void OnEnable()
+    private ProjectilePool   _pool = null;
+    protected Vector2        _projectileRange;
+    protected int            _damage = 20;// damage power is taken from its tower
+    protected Transform      _startTrans;
+
+    //properties 
+    public int Damage => _damage;
+
+    protected virtual void Awake()
     {
-        _startPos = transform.position;
+        _pool = ProjectilePool.Instance.GetComponent<ProjectilePool>();
+    }
+
+    protected virtual void Update() 
+    {
+        if (Vector3.Distance(_startTrans.position, transform.position) > _projectileRange.y)
+        {
+            _pool.BackObjectToPool(this, _poolIndex);
+        }
     }
 
     //abstract methods
-    public abstract void Shoot(Vector2 projectileRange, int damage, Vector3 targetPos);
-
+    public abstract void Shoot(Vector2 projectileRange, int damage,Transform startTrans, Vector3 targetPos);
 
 
     // Throws ball at location with regards to gravity (assuming no obstacles in path) and initialVelocity (how hard to throw the ball)
-    public Vector3 ThrowBallAtTargetLocation(Vector3 targetLocation, float initialVelocity, float distance)
+    public Vector3 ThrowBallAtTargetLocation(Vector3 targetLocation, float initialVelocity ,float _distance)
     {
-        Vector3 direction = (targetLocation - transform.position).normalized;
-        distance = Vector3.Distance(targetLocation, transform.position);
+        Vector3 direction = (targetLocation - _startTrans.position).normalized;
+        var distance = _distance;
 
-       var  _firingElevationAngle = FiringElevationAngle(Physics.gravity.magnitude, distance, initialVelocity);
-        Vector3 elevation = Quaternion.AngleAxis(_firingElevationAngle, transform.right) * transform.up;
-        float directionAngle = AngleBetweenAboutAxis(transform.forward, direction, transform.up);
-        Vector3 velocity = Quaternion.AngleAxis(directionAngle, transform.up) * elevation * initialVelocity;
+        var firingElevationAngle = FiringElevationAngle(Physics.gravity.magnitude, distance, initialVelocity);
+        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, _startTrans.right) * _startTrans.up;
+        float directionAngle = AngleBetweenAboutAxis(_startTrans.forward, direction, _startTrans.up);
+        Vector3 velocity = Quaternion.AngleAxis(directionAngle, _startTrans.up) * elevation * initialVelocity;
+
         return velocity;
 
 
 
-        // transform.rotation = Quaternion.AngleAxis(_firingElevationAngle,Vector3.forward);
+       // transform.rotation = Quaternion.AngleAxis(firingElevationAngle, Vector3.forward);
     }
 
     // Helper method to find angle between two points (v1 & v2) with respect to axis n
@@ -56,31 +66,28 @@ public abstract class Projectile : MonoBehaviour
 
     // Helper method to find angle of elevation (ballistic trajectory) required to reach distance with initialVelocity
     // Does not take wind resistance into consideration.
-    public static float FiringElevationAngle(float gravity, float distance, float initialVelocity)
+    private float FiringElevationAngle(float gravity, float distance, float initialVelocity)
     {
         float angle = 0.5f * Mathf.Asin((gravity * distance) / (initialVelocity * initialVelocity)) * Mathf.Rad2Deg;
         return angle;
     }
 
-    protected virtual void OnCollisionEnter(Collision collision)
+
+    protected virtual void OnTriggerEnter(Collider collider)
     {
-        if(Vector3.Distance(_startPos, transform.position) > _projectileRange.y)
+        Debug.Log("Collision triggerd" + collider.name);
+ 
+        if(collider.tag == "Ground")
         {
             _pool.BackObjectToPool(this, _poolIndex);
         }
-        if(collision.collider.tag == "Ground")
+        else if(collider.tag == "Enemy")
         {
-            _pool.BackObjectToPool(this, _poolIndex);
-            ProjectileDestroyed?.Invoke();
-        }
-        else if(collision.collider.tag == "Enemy")
-        {
-            var enemy = GameSceneManager.Instance.GetEnemy(collision.collider.GetInstanceID());
+            var enemy = GameSceneManager.Instance.GetEnemy(collider.GetInstanceID());
             if(enemy != null)
             {
                 enemy._enemyHealth.TakeDamage(_damage);
                _pool.BackObjectToPool(this, _poolIndex);
-                ProjectileDestroyed?.Invoke();
             }
         }
     }

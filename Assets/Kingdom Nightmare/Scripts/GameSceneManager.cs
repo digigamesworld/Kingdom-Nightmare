@@ -16,6 +16,7 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
     private Dictionary<int, Enemy> _enemies = new(); // a reference to all enemies by their ID's
     public DrawPath  DrawPath => FindObjectOfType<DrawPath>();
     //properties
+    public int WavesCount { get; set; }
     public int CurrentLevel => _currenLevel;
     public int RegisterdEnemyCount => _enemies.Count;
  
@@ -42,9 +43,9 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
     {
         WaveGenerator.NextWave -= SetWaveCount;
     }
-    private void SetWaveCount(int currentWave)
+    private void SetWaveCount()
     {
-        _currentWave = currentWave;
+        WavesCount++;
     }
     public void RegisterEnemies(int keyID, Enemy enemy)
     {

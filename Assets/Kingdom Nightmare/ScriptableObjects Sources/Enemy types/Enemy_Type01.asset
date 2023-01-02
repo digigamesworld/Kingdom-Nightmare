@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyInfos:
   - _HP: 30
-    _Speed: 10
+    _Speed: 6
   - _HP: 35
-    _Speed: 10
+    _Speed: 8
   - _HP: 40
-    _Speed: 12
+    _Speed: 10
   - _HP: 45
     _Speed: 12
   - _HP: 50
