@@ -4,22 +4,23 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-[Serializable]
+
 
 public class GameSceneManager : SingletonMB<GameSceneManager>
 {
-    
+
 
     //private fields
     private int _currentWave;
     private int _currenLevel = 1;
     private Dictionary<int, Enemy> _enemies = new(); // a reference to all enemies by their ID's
-    public DrawPath  DrawPath => FindObjectOfType<DrawPath>();
+
+    public DrawPath DrawPath => FindObjectOfType<DrawPath>();
     //properties
     public int WavesCount { get; set; }
     public int CurrentLevel => _currenLevel;
     public int RegisterdEnemyCount => _enemies.Count;
- 
+
     public int CurrentWave
     {
         get
@@ -37,15 +38,17 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
     }
     private void OnEnable()
     {
+
         WaveGenerator.NextWave += SetWaveCount;
     }
     private void OnDisable()
     {
         WaveGenerator.NextWave -= SetWaveCount;
     }
+    //calculate current wave
     private void SetWaveCount()
     {
-        WavesCount++;
+        _currenLevel++;
     }
     public void RegisterEnemies(int keyID, Enemy enemy)
     {
@@ -63,5 +66,15 @@ public class GameSceneManager : SingletonMB<GameSceneManager>
         }
 
         return null;
+    }
+
+    private void Start()
+    {
+        //fetch waves generators and add all ways count
+        var _waves = FindObjectsOfType<WaveGenerator>();
+        foreach (WaveGenerator wave in _waves)
+        {
+            WavesCount += wave.WaveCount;
+        }
     }
 }

@@ -20,6 +20,7 @@ public class WaveGenerator : MonoBehaviour
     [Tooltip("Start Generating Wave at current wave(all waves from all other generators)")]
     [SerializeField] private int              _startAtWave = 0;
     //properties
+    public int WaveCount => _waveCount;
     private bool AllEnemyAreDead
     {
         get
@@ -37,23 +38,20 @@ public class WaveGenerator : MonoBehaviour
             return true;
         }
     }
-    private void OnEnable()
-    {
-        WaveGenerator.NextWave += InvokeWave;
-    }
-    private void OnDisable()
-    {
-        WaveGenerator.NextWave -= InvokeWave;
-    }
+
     private void Start()
     {
-        InvokeWave();
+        InvokeRepeating(nameof(InvokeWave),0,_delayTime);
     }
     private void InvokeWave()
     {
       //work to do
         if(GameSceneManager.Instance.WavesCount == _startAtWave)
-               Invoke(nameof(StartSendingWave), _delayTime);
+        {
+            Invoke(nameof(StartSendingWave), 0.0f);
+            CancelInvoke(nameof(InvokeWave));
+        }
+
     }
     private void StartSendingWave()
     {

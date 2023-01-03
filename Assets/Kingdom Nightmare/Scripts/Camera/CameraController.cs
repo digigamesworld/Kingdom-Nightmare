@@ -8,31 +8,33 @@ public class CameraController : MonoBehaviour
     [SerializeField] float           _zoomSpeed = 3.0f;
     [SerializeField] float           _panMargin = 50.0f;
     [SerializeField] float           _panSpeed = 5.0f;
+    [SerializeField] float _mapRadious = 30.0f;
     [SerializeField] Vector2         _orthographicSize = new(20.0f, 38.0f);
     [SerializeField] Transform       _cameraOrigin;
-    [SerializeField] float           _mapRadious = 30.0f;
-    [SerializeField] Camera          _camera;
+    [SerializeField] Camera          _maincamera;
+    [SerializeField] Camera          _UIcamera;
+    [SerializeField] CameraScalar    _cameraScalar;
+
     //private fields
     private Vector3 _cameraOriginPos;
     //properties
-    private CameraScalar CameraS=> GetComponent<CameraScalar>();
+
     private Vector2 OrthographicSize
     { get 
         {
-            if (CameraS == null) return _orthographicSize;
-            else return new Vector2(_orthographicSize.x,CameraS.MaxOrthographicSize);
+            if (_cameraScalar == null) return _orthographicSize;
+            else return new Vector2(_orthographicSize.x, _cameraScalar.MaxOrthographicSize);
          }
     }
 
     private void Start()
     {
         _cameraOriginPos = transform.position;
-        Debug.Log(_cameraOriginPos);
     }
     private void Update()
     {
         SetZoom();
-       // DoPan();
+        DoPan();
     
     }
     public void DoPan()
@@ -67,27 +69,28 @@ public class CameraController : MonoBehaviour
     }
     private void SetZoom()
     {
+        Debug.Log(OrthographicSize);
 
         float mouseWheelY = Input.mouseScrollDelta.y;
-        _camera.orthographicSize -= mouseWheelY * _zoomSpeed;
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize, OrthographicSize.x, OrthographicSize.y);
+        _maincamera.orthographicSize -= mouseWheelY * _zoomSpeed;
+        _maincamera.orthographicSize = _UIcamera.orthographicSize = Mathf.Clamp(_maincamera.orthographicSize, OrthographicSize.x, OrthographicSize.y);
         // transform.position =  ClampCameraPosition(transform.position);
     }
 
 
     private Vector3 ClampCameraPosition(Vector3 targetPosition)
     {
-        float cameraHeight = _camera.orthographicSize * 2.0f;
-        float cameraWidth = cameraHeight * _camera.aspect;
+        float cameraHeight = _maincamera.orthographicSize * 2.0f;
+        float cameraWidth = cameraHeight * _maincamera.aspect;
     
         float minPosX = _cameraOriginPos.x - _mapRadious  ;
         float maxPosX = _cameraOriginPos.x + _mapRadious ;
         float minPosY = _cameraOriginPos.y - _mapRadious ;
         float maxPosY = _cameraOriginPos.y + _mapRadious ;
-        Debug.Log("minPosX " + minPosX + "maxPosX" + maxPosX + "minPosY" + minPosY + "maxPosY" + maxPosY);
-        float clampedPosX = Mathf.Clamp(targetPosition.x, minPosX, maxPosY);
+
+        float clampedPosX = Mathf.Clamp(targetPosition.x, minPosX, maxPosX);
         float clampedPosY = Mathf.Clamp(targetPosition.y, minPosY, maxPosY);
-        
+        Debug.Log("minPosX " + minPosX + "maxPosX" + clampedPosX + "minPosY" + minPosY + "maxPosY" + maxPosY);
         return new Vector3(clampedPosX, clampedPosY, _cameraOriginPos.z);
 
     }
