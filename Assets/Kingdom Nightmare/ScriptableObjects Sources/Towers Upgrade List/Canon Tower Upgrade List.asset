@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79455e1a10e237b4f96d921b03ae7ebc, type: 3}
+  m_Name: Canon Tower Upgrade List
+  m_EditorClassIdentifier: 
+  towersLevel:
+  - price: 50
+    range: {x: 25, y: 50}
+    fireRate: 2.5
+    damage: 100
+  - price: 60
+    range: {x: 25, y: 60}
+    fireRate: 2.3
+    damage: 120
+  - price: 80
+    range: {x: 17, y: 70}
+    fireRate: 2
+    damage: 150
+  - price: 120
+    range: {x: 25, y: 80}
+    fireRate: 1.8
+    damage: 170
+  - price: 150
+    range: {x: 25, y: 90}
+    fireRate: 1.5
+    damage: 200
+  - price: 200
+    range: {x: 25, y: 100}
+    fireRate: 1
+    damage: 250
