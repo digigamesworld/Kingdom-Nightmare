@@ -15,22 +15,32 @@ MonoBehaviour:
   _enemyInfos:
   - _HP: 30
     _Speed: 6
+    _damage: 1
   - _HP: 35
     _Speed: 8
+    _damage: 1
   - _HP: 40
     _Speed: 10
+    _damage: 1
   - _HP: 45
     _Speed: 12
+    _damage: 1
   - _HP: 50
     _Speed: 13
+    _damage: 2
   - _HP: 55
     _Speed: 13
+    _damage: 2
   - _HP: 60
     _Speed: 15
+    _damage: 2
   - _HP: 70
     _Speed: 16
+    _damage: 3
   - _HP: 80
     _Speed: 16
+    _damage: 3
   - _HP: 90
     _Speed: 17
+    _damage: 3
   _enemyPrefabPath: Enemies/Prefabs/SoldierType1

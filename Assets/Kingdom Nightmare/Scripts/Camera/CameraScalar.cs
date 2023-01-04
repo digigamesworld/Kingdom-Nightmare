@@ -8,7 +8,7 @@ public class CameraScalar : MonoBehaviour {
      [SerializeField] private float   _referenceCameraSize = 38.0f;
      [SerializeField] private float   _orthographicSize;
      [SerializeField] private Camera _mainCam;
-     [SerializeField]private Camera _UICam;
+     //[SerializeField]private Camera _UICam;
     //properties
     public float MaxOrthographicSize => _orthographicSize;
         //private fields
@@ -30,7 +30,7 @@ public class CameraScalar : MonoBehaviour {
             _orthographicSize = _referenceCameraSize;
         }
         _mainCam.orthographicSize = _orthographicSize;
-        if(_UICam != null) _UICam.orthographicSize = _orthographicSize;
+      //  if(_UICam != null) _UICam.orthographicSize = _orthographicSize;
     }
 
     

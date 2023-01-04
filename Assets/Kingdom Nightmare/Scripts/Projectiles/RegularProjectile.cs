@@ -21,7 +21,12 @@ public class RegularProjectile : Projectile
         transform.position += _direction.normalized* _velocity * Time.deltaTime ;//adding force to projectile
     }
 
-
+    protected override void OnTriggerEnter(Collider collider)
+    {
+        base.OnTriggerEnter(collider);
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Ground"))
+            AudioManager.Instance.Play("Arrow");
+    }
 
 
 }

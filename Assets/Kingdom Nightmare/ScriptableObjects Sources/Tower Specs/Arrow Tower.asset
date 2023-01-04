@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Arrow Tower
   m_EditorClassIdentifier: 
   towerUpgradeList: {fileID: 11400000, guid: 8d0bdc4a329dafd458dbfc290b112712, type: 2}
-  pathToIcon: Tower Icons/Arrow Tower
+  pathToNormalTowerSprite: Tower Icons/Arrow Tower
+  pathToHighlightedTowerSprite: Tower Icons/Arrow Tower _ hightlight
+  _towerSpectsDesc: "Archers Tower: \nMid raneg,Mid firerate\n"

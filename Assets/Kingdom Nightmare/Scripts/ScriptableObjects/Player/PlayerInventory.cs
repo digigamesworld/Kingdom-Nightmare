@@ -25,7 +25,7 @@ public class PlayerInventory : ScriptableObject
             _currentLevel = value;
         }
     }
-    public int _health
+    public int Health
     {
         get
         {

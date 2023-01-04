@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towersLevel:
   - price: 50
-    range: {x: 12, y: 50}
+    range: {x: 25, y: 50}
     fireRate: 2.5
     damage: 100
   - price: 60
-    range: {x: 12, y: 60}
+    range: {x: 25, y: 60}
     fireRate: 2.3
     damage: 120
   - price: 80
-    range: {x: 12, y: 70}
+    range: {x: 17, y: 70}
     fireRate: 2
     damage: 150
   - price: 120
-    range: {x: 12, y: 80}
+    range: {x: 25, y: 80}
     fireRate: 1.8
     damage: 170
   - price: 150
-    range: {x: 12, y: 90}
+    range: {x: 25, y: 90}
     fireRate: 1.5
     damage: 200
   - price: 200
-    range: {x: 0, y: 100}
+    range: {x: 25, y: 100}
     fireRate: 1
     damage: 250

@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Canon Tower
   m_EditorClassIdentifier: 
   towerUpgradeList: {fileID: 11400000, guid: f3fa4119643fb104192684354f4cb4ec, type: 2}
-  pathToIcon: Tower Icons/Canon Tower
+  pathToNormalTowerSprite: Tower Icons/Canon Tower
+  pathToHighlightedTowerSprite: Tower Icons/Canon Tower _ Hightlighted
+  _towerSpectsDesc: "Canan Tower: \nHigh range, Low fire rate\nAffect an area "

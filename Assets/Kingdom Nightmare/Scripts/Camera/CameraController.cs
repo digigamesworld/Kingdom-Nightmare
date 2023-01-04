@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Vector2         _orthographicSize = new(20.0f, 38.0f);
     [SerializeField] Transform       _cameraOrigin;
     [SerializeField] Camera          _maincamera;
-    [SerializeField] Camera          _UIcamera;
+   // [SerializeField] Camera          _UIcamera;
     [SerializeField] CameraScalar    _cameraScalar;
 
     //private fields
@@ -45,35 +45,35 @@ public class CameraController : MonoBehaviour
 
         if (mousePos.x < _panMargin)
         {
-            transform.position -= _panSpeed * Time.deltaTime * transform.right;
+            transform.position -= _panSpeed * Time.unscaledDeltaTime * transform.right;
 
                  
         }
         else if(mousePos.x > Screen.width - _panMargin)
         {
-            transform.position += _panSpeed * Time.deltaTime * transform.right;
+            transform.position += _panSpeed * Time.unscaledDeltaTime * transform.right;
 
         }
         if (mousePos.y < _panMargin)
         {
-            transform.position -= _panSpeed * Time.deltaTime * transform.up;
+            transform.position -= _panSpeed * Time.unscaledDeltaTime * transform.up;
 
 
         }
         else if (mousePos.y > Screen.height - _panMargin)
         {
-            transform.position += _panSpeed * Time.deltaTime * transform.up;
+            transform.position += _panSpeed * Time.unscaledDeltaTime * transform.up;
 
         }
          transform.position = ClampCameraPosition(transform.position);
     }
     private void SetZoom()
     {
-        Debug.Log(OrthographicSize);
+ 
 
         float mouseWheelY = Input.mouseScrollDelta.y;
         _maincamera.orthographicSize -= mouseWheelY * _zoomSpeed;
-        _maincamera.orthographicSize = _UIcamera.orthographicSize = Mathf.Clamp(_maincamera.orthographicSize, OrthographicSize.x, OrthographicSize.y);
+        _maincamera.orthographicSize = Mathf.Clamp(_maincamera.orthographicSize, OrthographicSize.x, OrthographicSize.y);
         // transform.position =  ClampCameraPosition(transform.position);
     }
 
@@ -90,7 +90,6 @@ public class CameraController : MonoBehaviour
 
         float clampedPosX = Mathf.Clamp(targetPosition.x, minPosX, maxPosX);
         float clampedPosY = Mathf.Clamp(targetPosition.y, minPosY, maxPosY);
-        Debug.Log("minPosX " + minPosX + "maxPosX" + clampedPosX + "minPosY" + minPosY + "maxPosY" + maxPosY);
         return new Vector3(clampedPosX, clampedPosY, _cameraOriginPos.z);
 
     }

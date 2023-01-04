@@ -6,26 +6,40 @@ using UnityEngine;
 public class TowerBase : MonoBehaviour
 {
     private Tower _tower;
-    [SerializeField] private HUDController _hudController;
     [SerializeField] private Vector3 _towerOffset;
-  
-   
+    [SerializeField] private Canvas towerCanvas;
 
-    private Tower _tower_Deployed;
-    [SerializeField] private GameObject some;
+    private void Start()
+    {
+        towerCanvas.gameObject.SetActive(false);
+        towerCanvas.worldCamera = FindObjectOfType<Camera>();
+    }
 
     private void OnMouseDown()
     {
-        Debug.Log("OPen Hud");
-        _hudController.OpenHud(this);
+        if(_tower == null)
+        {
+            towerCanvas.gameObject.SetActive(true);
+            AudioManager.Instance.Play("Click");
+        }
+          
+        Invoke(nameof(CloseTowerCanvas), 3);
     }
+  
     public void SetTower(Tower tower)
     {
-        if (_tower != null) return;
-        _tower = Instantiate(tower, Vector3.zero, Quaternion.identity);
-        // _tower.transform.SetParent(transform, false);
-        _tower.transform.position = transform.position;
-        _tower.transform.position += _towerOffset;
+        _tower = tower;
         
     }
+    public void CloseTowerCanvas()
+    {
+        towerCanvas.gameObject.SetActive(false);
+    }
+
+    public void ResetInvok()
+    {
+        CancelInvoke(nameof(CloseTowerCanvas));
+        Invoke(nameof(CloseTowerCanvas), 5);
+    }
+
 }

@@ -2,14 +2,14 @@
 using UnityEngine;
 using System;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : SingletonMB<AudioManager>
 {
 
-    public static AudioManager instance;
+
     public Audio[] audios;
     private void Awake()
     {
-        MakeSingleton();
+
         foreach (Audio audio in audios)
         {
             audio.source = gameObject.AddComponent<AudioSource>();
@@ -18,21 +18,11 @@ public class AudioManager : MonoBehaviour
             audio.source.loop = audio.loop;
             audio.source.pitch = audio.pitch;
             audio.source.playOnAwake = false;
+            audio.source.outputAudioMixerGroup = audio.AudioMixerGroup;
         }
     }
-    //create an instance of audio manager
-    private void MakeSingleton()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+
+
     //play a sound by its name
     public void Play(string name)
     {
@@ -70,15 +60,15 @@ public class AudioManager : MonoBehaviour
             a.source.Stop();
         }
     }
-    public void Stop(bool soundFx)
+    public void Stop(AudioMixerGroup mixerGroup)
     {
         foreach (Audio a in audios)
         {
-            if(soundFx == a.soundFx)
+            if(mixerGroup == a.AudioMixerGroup)
             a.source.Stop();
         }
     }
-    public void SetVolume(string name, float volume, bool soundFx)
+    public void SetVolume(string name, float volume, AudioMixerGroup mixerGroup)
     {
         Audio aud = Array.Find(audios, audio => audio.clipName == name);
         if (aud == null)
@@ -87,7 +77,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            if(aud.soundFx == soundFx)
+            if(aud.AudioMixerGroup == mixerGroup)
             {
                 aud.source.volume = volume;
             }
@@ -95,11 +85,11 @@ public class AudioManager : MonoBehaviour
         }
 
     }
-    public void SetAllVolume(float volume, bool soundFx)
+    public void SetAllVolume(float volume, AudioMixerGroup mixerGroup)
     {
         foreach (Audio aud in audios)
         {
-            if (aud.soundFx == soundFx)
+            if (aud.AudioMixerGroup == mixerGroup)
             {
                 aud.source.volume = volume;
             }
@@ -118,11 +108,11 @@ public class AudioManager : MonoBehaviour
         }
     }
     //this function set back all sounds volume to one
-    public void   SetAllVolumesToDefault(bool Sfx)
+    public void   SetAllVolumesToDefault(AudioMixerGroup mixerGroup)
     {
         foreach (Audio a in audios)
         {
-            if(a.soundFx == Sfx)
+            if(a.AudioMixerGroup == mixerGroup)
             a.source.volume = a.Volume;
         }
     }

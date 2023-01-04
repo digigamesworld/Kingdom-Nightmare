@@ -21,11 +21,11 @@ public class UpgradeList : ScriptableObject
         {
             // Return if towersLevel don't exist, are empty or the towersLevel index
             // specified is out of range	
-            if (towersLevel == null || towersLevel.Count < i || i < 1) return null;
+            if (towersLevel == null || towersLevel.Count < i) return null;
 
 
             // return towersLevel
-            return towersLevel[i-1];
+            return towersLevel[i];
         }
     }
 

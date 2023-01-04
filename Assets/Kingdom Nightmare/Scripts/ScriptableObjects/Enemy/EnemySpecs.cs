@@ -7,6 +7,7 @@ public class enemyInfo
 {
     public int _HP;
     public int _Speed;
+    public int _damage;// damage amount which take to player when reachs end node
 }
 /// <summary>
 /// //we can create a list of enemyinfos which can be used by wave numbers.enemies can have different

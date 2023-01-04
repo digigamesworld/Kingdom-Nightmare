@@ -5,7 +5,6 @@ using UnityEngine;
 public class ExplosiveProjectile : MonoBehaviour
 {
     [SerializeField] private float _explosionAreaRange;
-    [SerializeField] private GameObject _explosionEffect;
     [Range(0.1f, 1.0f)]
     [Tooltip("Base Projectile damage multiples with this value and takes damage to an area")]
     [SerializeField] private float _damageRatio = 0.3f;
@@ -17,9 +16,9 @@ public class ExplosiveProjectile : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_explosionEffect != null) Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+      
         var listOfEnemies = new List<Enemy>();
-        var registerdEnemies = GameSceneManager.Instance.AllEnemies();
+        var registerdEnemies = GameSceneManager.Instance.RegisterdEnemis;
         foreach (Enemy Ene in registerdEnemies.Values)
         {
             if (!Ene.gameObject.activeInHierarchy) continue;

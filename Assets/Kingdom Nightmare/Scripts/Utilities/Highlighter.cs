@@ -1,20 +1,25 @@
 using UnityEngine;
+
 public class Highlighter : MonoBehaviour
 {
     private int _defaultLayerMask;
     private int _hightlightLayerMask;
+    private Transform[] _childtranses;
     private void Awake()
     {
         _defaultLayerMask = gameObject.layer;
         _hightlightLayerMask = LayerMask.NameToLayer("Highlight");
+        _childtranses = transform.GetComponentsInChildren<Transform>();
     }
     private void OnMouseEnter()
     {
-        transform.gameObject.layer = _hightlightLayerMask;
+    for(int i=0; i< _childtranses.Length;i++)
+            _childtranses[i].gameObject.layer = _hightlightLayerMask;
     }
     private void OnMouseExit()
     {
-        transform.gameObject.layer = _defaultLayerMask;
+        for (int i = 0; i < _childtranses.Length; i++)
+            _childtranses[i].gameObject.layer = _defaultLayerMask;
     }
  
 }

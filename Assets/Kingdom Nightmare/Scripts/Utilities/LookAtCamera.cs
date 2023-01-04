@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class LookAtCamera : MonoBehaviour
 {
-[SerializeField] private Transform Target;
+    private Camera cam;
+ 
+    private void Start()
+    {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
+    }
     private void FixedUpdate()
     {
-        transform.LookAt(Target);
+
+        transform.LookAt(cam.transform);
     }
 }

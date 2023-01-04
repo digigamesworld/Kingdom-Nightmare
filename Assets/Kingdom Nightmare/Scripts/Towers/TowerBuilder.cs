@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TowerTypes { ArcherTower, CanonTower}
 public class TowerBuilder : MonoBehaviour
 {
-    public static TowerBuilder _instance;
+    public static TowerBuilder instance;
+
     //inspactor
     //reference to all towers
-    public List<Tower> _towers = new();
-    public void Start ()
+    [SerializeField]private  List<Tower> _towers = new();
+    public List<Tower> Towers => _towers;
+    public void Awake ()
     {
       
-        if (_instance == null)
+        if (instance == null)
         {
-            _instance = this;
+            instance = this;
         }
         else
         {
@@ -22,6 +25,31 @@ public class TowerBuilder : MonoBehaviour
         
         
     }
+    public TowersSpecs GetTowerSpec(TowerTypes towerTypes)
+    {
+        for (int i = 0; i < _towers.Count; i++)
+        {
+            if (_towers[i].TowerType == towerTypes)
+            {
+                return _towers[i].TowerSpecs;
 
+            }
+        }
+        return null;
+
+    }
+    public Tower BuildTower(TowerTypes towerType, Vector3 position)
+    {
+        if (_towers.Count == 0) return null;
+        for(int i=0; i<_towers.Count;i++)
+        {
+            if(_towers[i].TowerType == towerType)
+            {
+                return Instantiate(_towers[i], position, Quaternion.identity);
+
+            }
+        }
+        return null;
+    }
 
 }

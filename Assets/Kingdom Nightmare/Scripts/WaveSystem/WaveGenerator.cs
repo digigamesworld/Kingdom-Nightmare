@@ -21,23 +21,7 @@ public class WaveGenerator : MonoBehaviour
     [SerializeField] private int              _startAtWave = 0;
     //properties
     public int WaveCount => _waveCount;
-    private bool AllEnemyAreDead
-    {
-        get
-        {
-            var registerdEnemies = GameSceneManager.Instance.AllEnemies();
-            foreach (Enemy Ene in registerdEnemies.Values)
-            {
-                if (Ene.gameObject.activeInHierarchy)
-                {
-                    return false;
-                    
-                }
-            }
 
-            return true;
-        }
-    }
 
     private void Start()
     {
@@ -45,8 +29,8 @@ public class WaveGenerator : MonoBehaviour
     }
     private void InvokeWave()
     {
-      //work to do
-        if(GameSceneManager.Instance.WavesCount == _startAtWave)
+        //work to do
+        if (GameSceneManager.Instance.CurrentWave == _startAtWave)
         {
             Invoke(nameof(StartSendingWave), 0.0f);
             CancelInvoke(nameof(InvokeWave));
@@ -72,7 +56,7 @@ public class WaveGenerator : MonoBehaviour
             }
             else
             {
-                while(!AllEnemyAreDead)
+                while(!GameSceneManager.Instance.AllEnemyAreDead)
                 {
                     yield return null;
 
@@ -81,6 +65,10 @@ public class WaveGenerator : MonoBehaviour
                 {
                     NextWave?.Invoke();
                     Invoke(nameof(StartSendingWave), _delayTime);
+                }
+                else
+                {
+                    NextWave?.Invoke();
                 }
             }
    

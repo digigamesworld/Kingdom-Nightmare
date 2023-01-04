@@ -15,5 +15,5 @@ public class Audio
     public AudioSource source;
     public AudioClip clip;
     public bool loop;
-    public bool soundFx = true;
+    public AudioMixerGroup AudioMixerGroup;
 }

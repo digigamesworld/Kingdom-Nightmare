@@ -20,10 +20,10 @@ public class Enemy : MonoBehaviour
     //properties
     public EnemyHealth  _enemyHealth => GetComponent<EnemyHealth>();
     public EnemyHealth EnemyHp => _enemyHealth;
-  
+    public EnemySpecs Enemyspec => _enemySpecs;
     private List<Transform> _pathNodes = new List<Transform>();
 
-    public static event Action EnemyReachedEndNode;
+    public static event Action<Enemy> EnemyReachedEndNode;
     public int PooledIndex => _poolIndexNumebr;
     //properties
 
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         {
          
             EnemyPool.Instance.BackObjectToPool(this, _poolIndexNumebr);
-            EnemyReachedEndNode?.Invoke();
+            EnemyReachedEndNode?.Invoke(this);
             return;
 
         }
